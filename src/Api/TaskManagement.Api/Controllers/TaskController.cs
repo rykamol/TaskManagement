@@ -19,7 +19,7 @@ namespace Template.Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-
+            if(string.IsNullOrEmpty(model.Title)) { return BadRequest("Title is empty!"); }
             try
             {
                 var task = new TaskModel()
@@ -115,7 +115,14 @@ namespace Template.Api.Controllers
         {
             try
             {
-                return Ok(_unitOfWork.TaskRepo.GetAll().ToList());
+                var tasks = _unitOfWork.TaskRepo.GetAll().ToList();
+
+                if (tasks.Count == 0)
+                {
+                    return NoContent();
+                }
+
+                return Ok(tasks);
             }
             catch (Exception ex)
             {
