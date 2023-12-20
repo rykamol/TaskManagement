@@ -182,5 +182,23 @@ namespace TaskManagerTest
             (result as NotFoundObjectResult).StatusCode.Should().Be(404);
         }
 
+
+        [Fact]
+        public async Task Create_ShouldCallSaveChangesOnce()
+        {
+            //Arrange
+            var _unitOfWork = new Mock<IUnitOfWork>();
+            var newTask = TaskMockData.GetValidTask();
+            _unitOfWork.Setup(_ => _.TaskRepo.Create(newTask));
+            var sut = new TaskController(_unitOfWork.Object);
+
+            //Act
+            var result = sut.Create(newTask);
+
+            //Assert
+            _unitOfWork.Verify(_ => _.SaveChanges(), Times.Exactly(1));
+        }
+
+
     }
 }
