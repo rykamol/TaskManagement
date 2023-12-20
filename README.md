@@ -24,7 +24,7 @@ Here are the endpoints below
   https://localhost:7058/Task/GetAll
 
 2. Find Task By Id (GET)
-   https://localhost:7058/Task/GetById
+   https://localhost:7058/Task/GetById/1
 
 3. Delete Task By Id: (POST)
    https://localhost:7058/Task/Delete
